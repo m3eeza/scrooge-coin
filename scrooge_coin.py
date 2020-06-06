@@ -5,8 +5,7 @@ class Scroogecoin:
         that creates the coin is included in the blockchain.
     """
 
-    def __init__(self, value, user_id, coin_id=None):
-        self.value = value
+    def __init__(self, user_id, coin_id=None):
         self.user_id = user_id
         self.id = coin_id
 
@@ -14,24 +13,28 @@ class Scroogecoin:
         return self.__dict__ == other.__dict__
 
     def __str__(self):
-        if self.id is not None:
-            num = self.id.coin_num
-        else:
-            num = 'N/A'
-        return 'Num: ' + str(num) + ', Value: ' + str(self.value) + \
-               ', user id: ' + self.user_id
+        return f'User ID: {self.user_id}, {self.id}'
 
     def __repr__(self):
         return str(self)
 
 
 class CoinId:
-    """ The id of a coin. It has two properties:
-        - transaction_id: the index of the block where the
+    """ The id of a coin. It has three properties:
+        - block_id: the index of the block where the
             transaction is included.
+        - transaction_id: the index of the transaction where the
+            coin is included.
         - coin_num: the index of the coin into the transaction.
     """
 
-    def __init__(self, coin_num, transaction_id=None):
+    def __init__(self, coin_num, transaction_id=None, block_id=None):
         self.coin_num = coin_num
         self.transaction_id = transaction_id
+        self.block_id = block_id
+
+    def __str__(self):
+        return f'Coin ID: {self.coin_num}, Transaction ID: {self.transaction_id}, Block ID: {self.block_id}'
+
+    def __repr__(self):
+        return str(self)
