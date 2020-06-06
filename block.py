@@ -28,7 +28,8 @@ class Block:
         return f'Block ID:  {self.id}\nHash previous block: {self.hash_previous_block}\nTransactions:\n{transactions}'
 
     def __short_str__(self):
-        return f'Block ID:  {self.id} Hash previous block: {self.hash_previous_block}'
+        block_hash = hash_sha256(str(self).encode('utf-8'))
+        return f'Block ID:  {self.id},Block Hash: {block_hash}, Previous Block Hash: {self.hash_previous_block}'
 
     def __repr__(self):
         output = 'Block Under Construction\n'
