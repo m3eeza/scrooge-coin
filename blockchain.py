@@ -72,31 +72,25 @@ class Blockchain:
                 return False
         return True
 
-    def check_coin(self, coin):
+    def check_coin(self, coin, payment):
         """ Check if the coin was created and was not consumed """
-        print(coin)
+        blocks = self.blocks + [self.current_block]
         block_id, transaction_id = coin.id.block_id, coin.id.transaction_id
         # Check created
-        if coin not in self.current_block.transactions[transaction_id].created_coins:
-            print('WARNING: Coin creation not found')
-            return False
-
-        # Check not consumed
-        for ind in range(block_id, len(self.blocks)):
-            transaction = self.blocks[ind].transaction
-            if isinstance(transaction, Transaction) and coin in transaction.consumed_coins:
-                print('WARNING: Double spent attempt detected')
+        transaction = blocks[block_id].transactions[transaction_id]
+        if isinstance(transaction, CoinCreation):
+            if coin not in transaction.created_coins:
                 return False
 
         return True
 
-    def check_coins(self, coins):
+    def check_coins(self, payment):
         """ Check a group of coins. If the check_coin function
             returns false for any of the coins then the result is
             false, otherwise the result is true.
         """
-        for coin in coins:
-            if not self.check_coin(coin):
+        for coin in payment.coins:
+            if not self.check_coin(coin, payment):
                 return False
         return True
 
@@ -109,27 +103,6 @@ class Blockchain:
             return hash_sha256(self.blocks[-1])
         else:
             return None
-
-    def check_coin(self, coin: Scroogecoin):
-        """ Check if the coin was created and was not consumed """
-        blocks = self.blocks + [self.current_block]
-        block_id, transaction_id = coin.id.block_id, coin.id.transaction_id
-        transaction = blocks[block_id].transactions[transaction_id]
-        # Check created
-        if isinstance(transaction, CoinCreation):
-            pass
-        elif coin.user_id != transaction.receiver.id:
-            print('Invalid Transaction: Coin creation not found!')
-            return False
-
-        # Check not consumed
-        for block in blocks:
-            for tx in block.transactions:
-                if not isinstance(tx, CoinCreation) and coin.user_id == tx.sender:
-                    for coin in tx.coins:
-                        print('Invalid Transaction: Attempt Double Spending detected!')
-                        return False
-        return True
 
     def __str__(self):
         separator = '-' * 30 + '\n'

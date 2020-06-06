@@ -13,6 +13,7 @@ class SafeWriter:
         Thread(name='SafeWriter', target=self.internal_writer).start()
 
     def write(self, data):
+        print(data)
         self.queue.put(data.__str__() + '\n')
 
     def internal_writer(self):

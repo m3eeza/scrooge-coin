@@ -12,6 +12,7 @@ class Block:
         self.transactions = []
         self.id = id
         self.hash_previous_block = hash_previous_block
+        self.signature = None
 
     def __contains__(self, item):
         return item in self.transactions

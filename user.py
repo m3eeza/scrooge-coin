@@ -38,7 +38,7 @@ class User:
                             coins.append(coin)
                 else:
                     for coin in tx.coins:
-                        if coin.user_id == self.id and tx.receiver.id == self.id:
+                        if tx.receiver.id == self.id:
                             coins.append(coin)
                         if coin.user_id == self.id and tx.sender.id == self.id:
                             coins.remove(coin)

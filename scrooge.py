@@ -38,7 +38,7 @@ class Scrooge:
 
         # Check if all the coins that are being transferred
         # exist and were not consumed previously
-        if not self.ledger.check_coins(payment.coins):
+        if not self.ledger.check_coins(payment):
             return 'Invalid Transaction: Attempt Double Spending detected'
         self.ledger.add_transaction(payment)
         return 'ACCEPTED TRANSACTION'
