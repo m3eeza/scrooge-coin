@@ -1,6 +1,5 @@
 class Scroogecoin:
-    """ Each coin has an id, a value that is how many scroogecoins
-        it represents, and a user id that is its owner.
+    """ Each coin has an id and a user id that is its owner.
         The coin id is assigned by Scrooge when the transaction
         that creates the coin is included in the blockchain.
     """
